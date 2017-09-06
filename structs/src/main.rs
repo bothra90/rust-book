@@ -1,5 +1,4 @@
 #[derive(Debug)]
-
 // Rectangle is a struct
 struct Rectangle {
     length: u32,
@@ -23,6 +22,11 @@ impl Rectangle {
 
 // Separate impl block
 impl Rectangle {
+    // In c++ terminology, square is static function inside Rectangle. It will be called as
+    // follows:
+    /// ```rust
+    /// let sq = Rectangle::square(5);
+    /// ```
     fn square(size: u32) -> Rectangle {
         Rectangle {
             length: size,
