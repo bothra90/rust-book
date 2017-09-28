@@ -1,0 +1,6 @@
+[package]
+name = "functional"
+version = "0.1.0"
+authors = ["Abhay Bothra <bothra90@users.noreply.github.com>"]
+
+[dependencies]
