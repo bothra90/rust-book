@@ -1,3 +1,6 @@
+// Each closure instance has its own unique anonymous type: that is, even if two closures have
+// the same signature, their types are still considered to be different.
+//
 // Closures can capture values from environment by (1) moving, (2) borrow immutably, and (3) borrow
 // mutably
 // (1) Encoded as FnOnce trait. FnOnce consumes the variables it captures from its enclosing scope
@@ -26,16 +29,23 @@ pub fn run() {
 }
 
 // Question: How to do this without K and V being copyable.
+// Question: Why do we have to make T a template type?
+// Type of @calculation is known to be Fn(K) -> V, so why use T at all?
+// https://rustbyexample.com/fn/closures/anonymity.html explains why that might be necessary.
+// Since Rust does not have subtypes, if we need to pass in a value to a function or store a member
+// variable that implements a trait, we need to do so using generic trait bounds.
 struct Cacher<T, K, V>
     where T: Fn(K) -> V,
           K: Eq + Hash + Copy,
           V: Copy,
 {
     calculation: T,
+    // If we want to store non-copyable values in the hashmap, we would need to store references in
+    // the map, but then we would need to setup lifetimes, etc.
     values: HashMap<K, V>,
 }
 
-impl< T, K, V> Cacher<T, K, V>
+impl<T, K, V> Cacher<T, K, V>
     where T: Fn(K) -> V,
           K: Eq + Hash + Copy,
           V: Copy,
@@ -50,13 +60,16 @@ impl< T, K, V> Cacher<T, K, V>
     fn value(&mut self, arg: K) -> V {
         // Question: Is there a way to do this using HashMap::Entry?
         let entry = self.values.entry(arg);
+        // This evaulates every time. Even if the element is in the map. How do we avoid that?
+        // entry.or_insert((self.calculation)(arg))
         match entry {
             Entry::Occupied(o) => {
                 *(o.get())
             }
             Entry::Vacant(v) => {
-                let val = (self.calculation)(arg);
-                *(v.insert(val))
+                let val = Box::new((self.calculation)(arg));
+                v.insert(*val);
+                *val
             }
         }
     }
@@ -64,8 +77,6 @@ impl< T, K, V> Cacher<T, K, V>
 
 fn generate_workout(intensity: i32, random_number: i32) {
     // Type annotations are not neccessary for closures, but can be added for clarity.
-    // Each closure instance has its own unique anonymous type: that is, even if two closures have
-    // the same signature, their types are still considered to be different.
     let mut expensive_result = Cacher::new(|nums: i32| -> i32 {
         println!("calculating slowly...");
         thread::sleep(Duration::from_secs(2));
@@ -102,7 +113,7 @@ fn move_environment() {
     // needed to read the value of x. However, we can explicitly move the data by a using the
     // 'move' keyword
     let x = vec![1,2,3];
-    // The following won't compile. Why?
+    // Closures have anonymous types. The following won't compile.
     // let equal_to_x: (FnOnce(Vec<i32>) -> bool) = move |z| z == x;
     let equal_to_x = move |z| z == x;
     // This is no longer allowed.
@@ -110,5 +121,5 @@ fn move_environment() {
     let y = vec![1, 2, 3];
     assert!(equal_to_x(y));
     let y = vec![1, 2, 3];
-    //assert!(equal_to_x(y));
+    assert!(equal_to_x(y));
 }

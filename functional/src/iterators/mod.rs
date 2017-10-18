@@ -65,7 +65,7 @@ fn map_sum() {
 
 // Custom iterator which counts from 1 to 5.
 struct Counter {
-    count: u8,
+    count: u32,
 }
 
 impl Counter {
@@ -75,7 +75,7 @@ impl Counter {
 }
 
 impl Iterator for Counter {
-    type Item = u8;
+    type Item = u32;
 
     fn next(&mut self) -> Option<Self::Item> {
         self.count +=1 ;
@@ -108,4 +108,35 @@ fn using_other_iterator_trait_methods() {
                                  .filter(|x| x % 3 == 0)
                                  .sum();
     assert_eq!(18, sum);
+}
+
+#[derive(PartialEq, Debug)]
+struct Shoe {
+    size: i32,
+    style: String,
+}
+
+fn shoes_in_my_size(shoes: Vec<Shoe>, shoe_size: i32) -> Vec<Shoe> {
+    shoes.into_iter()
+        .filter(|s| s.size == shoe_size)
+        .collect()
+}
+
+#[test]
+fn filters_by_size() {
+    let shoes = vec![
+        Shoe { size: 10, style: String::from("sneaker") },
+        Shoe { size: 13, style: String::from("sandal") },
+        Shoe { size: 10, style: String::from("boot") },
+    ];
+
+    let in_my_size = shoes_in_my_size(shoes, 10);
+
+    assert_eq!(
+        in_my_size,
+        vec![
+            Shoe { size: 10, style: String::from("sneaker") },
+            Shoe { size: 10, style: String::from("boot") },
+        ]
+    );
 }
