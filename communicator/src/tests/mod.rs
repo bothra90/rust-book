@@ -5,10 +5,10 @@ fn it_works() {
     // client::connect;
     // All of the following work
     {
-        use client::connect; // Paths in "use" are relative to the crate root by default.
+        use crate::client::connect; // Paths in "use" are relative to the crate root by default.
         connect();
     }
-    ::client::connect();
+    crate::client::connect();
     super::client::connect();
     {
         use super::client;

@@ -4,7 +4,7 @@ enum TrafficLight {
     _Green,
 }
 
-use TrafficLight::{Red, Yellow};
+use crate::TrafficLight::{Red, Yellow};
 pub fn f() {
     let _red = Red;
     let _yellow = Yellow;
@@ -13,7 +13,7 @@ pub fn f() {
 
 #[cfg(test)]
 mod tests {
-    use f;
+    use crate::f;
     #[test]
     fn it_works() {
         f();
