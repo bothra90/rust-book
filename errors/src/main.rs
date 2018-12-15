@@ -37,7 +37,7 @@ fn main() {
     // f is of type Result<std::fs::file, std::io::Error>
     let f = File::open("hello.txt");
 
-    let f = match f {
+    let _f = match f {
         Ok(file) => file,
         Err(error) => {
             panic!("Failed to open file hello.txt, error: {}", error);
@@ -46,7 +46,7 @@ fn main() {
 
     // Example: 3
     let f = File::open("hello.txt");
-    let f = match f {
+    let _f = match f {
         Ok(file) => file,
         // the if condition after ther Err match specifies a "match guard"
         // ref is need to ensure that error is not moved into this condition, but only referenced
@@ -63,12 +63,12 @@ fn main() {
 
     // Example: 4
     // Unwrap returns the contents of Ok if the operation succeeds, otherwise panics.
-    let f = File::open("hello.txt").unwrap();
+    let _f = File::open("hello.txt").unwrap();
 
     // Example: 5.
     // remove_file("hello.txt").unwrap();
     // expect is just like unwrap, except that it panics with the given msg.
-    let f = File::open("hello.txt").expect("Failed to open file");
+    let _f = File::open("hello.txt").expect("Failed to open file");
 
     // Example: 6. Propagating errors.
     let name = read_username_from_file().expect("Failed to get username");

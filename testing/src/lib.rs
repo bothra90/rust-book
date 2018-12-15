@@ -82,7 +82,7 @@ mod tests {
     fn custom_message() {
         // All arguments to assert* macros after the required number of arguments are passed to
         // format! and the output of format is printed if the test fails.
-        let result = greet("Abhay");
+        let _result = greet("Abhay");
         // assert!(result.contains("Abhay"), "Expected Abhay, found {}", result);
     }
 
@@ -140,7 +140,7 @@ pub fn add_two(a: i32) -> i32 {
     a + 2
 }
 
-fn greet(name: &str) -> String {
+fn greet(_name: &str) -> String {
     format!("Hello, Bothra")
 }
 

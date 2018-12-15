@@ -46,8 +46,8 @@
 fn main() {
     println!("Hello, world!");
     // Following are OK since x and y are of the same type: i32 and f64 respectively.
-    let integer = Point { x: 5, y: 10 };
-    let float = Point { x: 1.0, y: 4.0 };
+    let _integer = Point { x: 5, y: 10 };
+    let _float = Point { x: 1.0, y: 4.0 };
     // However, the following does not compile:
     //  let wont_work = Point { x: 5, y: 4.0 };
 

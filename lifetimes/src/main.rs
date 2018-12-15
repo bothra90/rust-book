@@ -51,7 +51,7 @@ fn main() {
     let y = 3;
     let r: &i32;
     {
-        let x = 5;
+        let _x = 5;
         //r = &x;
         // Above is not valid since x is destroyed at the end of this block, where as r, which is
         // now a reference to x lives longer than x itself.
@@ -74,10 +74,10 @@ fn main() {
     }
 
     // Example: 4
-    let string1 = String::from("long string is long");
-    let result: &String;
+    let _string1 = String::from("long string is long");
+    let _result: &String;
     {
-        let string2 = String::from("xyz");
+        let _string2 = String::from("xyz");
         // This will not work since result lives longer than string2.
         // result = longest(string1.as_str(), string2.as_str());
     }
@@ -86,7 +86,7 @@ fn main() {
     // Example: 5 (See struct ImportantExcerpt defined below)
     let novel = String::from("Call me Abhay. Some years ago...");
     let first_sentence = novel.split('.').next().expect("Could not find a '.'");
-    let i = ImportantExcerpt {
+    let _i = ImportantExcerpt {
         part: first_sentence,
     };
 

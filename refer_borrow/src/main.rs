@@ -29,7 +29,7 @@ fn main() {
     // For example, if the variable has been borrowed, it is immutable during the lifetime of the
     // borrow. It's important to remember that the lifetime of an object is different from its last
     // point of use.
-    let mut name = format!("Fello rustacean!");
+    let name = format!("Fello rustacean!");
     let r: &String = &name; // r is an immutable borrow of name.
     print(r);
     // This is not allowed:

@@ -9,7 +9,7 @@ pub fn run() {
 
 fn nowait() {
     // Shows that sender doesn't block for a receiver.
-    let (tx, rx) = mpsc::channel();
+    let (tx, _rx) = mpsc::channel();
     let handle = thread::spawn(move || {
         let val = String::from("hi");
         tx.send(val).unwrap();
@@ -20,7 +20,7 @@ fn nowait() {
 
 fn single_sender() {
     let (tx, rx) = mpsc::channel();
-    let handle = thread::spawn(move || {
+    let _handle = thread::spawn(move || {
         let val = String::from("hi");
         tx.send(val).unwrap();
         // The following will cause a compilation failure since `val` has been moved to the
