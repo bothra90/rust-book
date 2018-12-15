@@ -168,10 +168,14 @@ struct ImportantExcerpt<'a> {
     part: &'a str,
 }
 
-impl<'a> ImportantExcerpt<'a> {
+impl<'a, 'b> ImportantExcerpt<'a> {
     // 'b is the lifetime of the object itself, where as 'a is the lifetime over which
-    // ImportantExcerpt is generic. It can however be elided because of the elision rules.
+    // ImportantExcerpt is generic.
     fn level(&'b self) -> i32 {
+        3
+    }
+    // It can however be elided because of the elision rules.
+    fn next_level(&self) -> i32 {
         3
     }
 }

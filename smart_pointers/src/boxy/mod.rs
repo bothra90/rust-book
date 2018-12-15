@@ -46,8 +46,10 @@ pub fn run() {
         1,
         Box::new(List::Cons(2, Box::new(List::Cons(3, Box::new(List::Nil))))),
     );
-    // We can send a reference to a Box<T> where the function expects a reference to T.
     print_ref(&list);
+    // We can send a reference to a Box<T> where the function expects a reference to T.
+    let boxed_list = Box::new(list);
+    print_ref(&boxed_list);
     // For more, see mod deref.
 }
 

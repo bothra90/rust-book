@@ -3,7 +3,8 @@
 /*
  * Slices reference a contiguous sequence of elements in a collection.
  * They themselves do not have ownership of the referrenced data.
- *
+ * They are like fat pointers, since they have both a pointer, and a length of the data they are
+ * pointing to.
  */
 
 fn main() {
@@ -19,7 +20,7 @@ fn main() {
     // They are great when we want to avoid the expensive copying of strings when performing
     // various string operations.
     // So String object = len + capacity + ref to data in memory,
-    // where was str object = ref to data in memory + len
+    // whereas &str = ref to data in memory + len
     // This is very similar to string slices in golang.
     let mut s: String = String::from("hello, world!");
     // The type that signifies “string slice” is written as &str
@@ -55,9 +56,20 @@ fn main() {
     let slice: &[i32] = &a[1..3];
     println!("Array slice first item: {}", slice[0]);
     // However, the index is not checked, which could cause a panic at runtime.
-    println!("Array slice first item: {}", slice[10]);
+    // println!("Array slice first item: {}", slice[10]);
+    let a = [1, 3, 5];
+    let v = vec![2, 4, 6];
+    let s = String::from("fun");
+    let sl = "world";
+    // We can pass a ref to an array, ref to a vector, or ref to a vector slice to a function
+    // taking a slice.
+    printSlice(&a);
+    printSlice(&v);
+    printSlice(&v[1..]);
+    // We can pass both &String and &str to a function taking a string slice.
+    printStr(&s);
+    printStr(sl);
 }
-
 
 /*
  * The problem with this approach is that if the string itself is mutable, an index to
@@ -83,4 +95,14 @@ fn first_word_slice(s: &String) -> &str {
     }
     // Equivalent: &s[0..] and len = s.len(); &s[..len]
     &s[..]
+}
+
+fn printSlice<T: std::fmt::Display>(slice: &[T]) {
+    for i in slice {
+        println!("{}", i);
+    }
+}
+
+fn printStr(s: &str) {
+    println!("{}", s);
 }

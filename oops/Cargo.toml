@@ -1,6 +1,10 @@
 [package]
-name = "smart_pointers"
+name = "oops"
 version = "0.1.0"
 authors = ["Abhay Bothra <bothra90@users.noreply.github.com>"]
 edition = "2018"
+
 [dependencies]
+
+[lib]
+name = "gui"

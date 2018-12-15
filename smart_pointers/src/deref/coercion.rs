@@ -2,7 +2,7 @@
 // Deref::deref as many times as it needs in order to get a reference to match the parameter’s type.
 // This is resolved at compile time, so there is no run-time penalty for taking advantage of deref
 // coercion!
-use deref::mybox::MyBox;
+use crate::deref::mybox::MyBox;
 
 pub fn run() {
     let m = MyBox::new(String::from("foo"));

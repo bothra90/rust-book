@@ -14,7 +14,7 @@ fn main() {
         println!("value in array: {}", i);
     }
     // When iterating over Range m..n, we get [m,n)
-    for i in (0..3) {
+    for i in 0..3 {
         println!("Iterating over a range: {}", i);
     }
     // Other forms of loops are "loop" and "while"

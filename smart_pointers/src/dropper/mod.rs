@@ -9,13 +9,13 @@
 use std::mem::drop;
 
 pub fn run() {
-    let c = CustomSmartPointer { data: String::from("my stuff") };
+    let _c = CustomSmartPointer { data: String::from("my stuff") };
     let d = CustomSmartPointer { data: String::from("other stuff") };
     println!("CustomSmartPointers created.");
     // We can't explicitly call d.drop() since that could cause a double-free. Instead, if we want
     // to early-free resources in d, we can `move` it to the std::mem:drop function.
     drop(d);
-    let e = CustomSmartPointer { data: String::from("other other stuff") };
+    let _e = CustomSmartPointer { data: String::from("other other stuff") };
 }
 
 pub struct CustomSmartPointer {

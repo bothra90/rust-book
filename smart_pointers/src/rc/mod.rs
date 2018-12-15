@@ -21,17 +21,17 @@
 // borrows to the same place can cause data races and inconsistencies.
 
 use std::rc::Rc;
-use boxy;
+use crate::boxy;
 
-use dropper::CustomSmartPointer;
+use crate::dropper::CustomSmartPointer;
 
 pub fn run() {
     // We should see the destructor of "hello" being called only once.
     let a = Rc::new(CustomSmartPointer { data: String::from("hello") });
-    let b = a.clone();
+    let _b = a.clone();
     // Listing 15-12.
     let a = boxy::List::Cons(5, Box::new(boxy::List::Cons(10, Box::new(boxy::List::Nil))));
-    let b = boxy::List::Cons(3, Box::new(a));
+    let _b = boxy::List::Cons(3, Box::new(a));
     // The following line would not be allowed since a has been moved into the box in the previous
     // statement.
     // let c = boxy::List::Cons(4, Box::new(a));
@@ -45,10 +45,10 @@ pub fn run() {
     // kinds of clones that might have a large impact on runtime performance and memory usage and
     // the types of clones that increase the reference count that have a comparatively small impact
     // on runtime performance and don’t allocate new memory.
-    let b = Cons(3, Rc::clone(&a));
+    let _b = Cons(3, Rc::clone(&a));
     println!("count after creating b = {}", Rc::strong_count(&a));
     {
-        let c = Cons(4, Rc::clone(&a));
+        let _c = Cons(4, Rc::clone(&a));
         println!("count after creating c = {}", Rc::strong_count(&a));
     }
     println!("count after c goes out of scope = {}", Rc::strong_count(&a));

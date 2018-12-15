@@ -66,7 +66,7 @@ fn main() {
     // mixed-in. We can call the trait methods by the following syntax.
     println!("1 new tweet: {}", tweet.summary());
     println!("{}", <Tweet as DefaultSummarizable>::summary(&tweet));
-    println!("{}", <Tweet as Serializable>::summary(&tweet));
+    println!("{}", <Tweet as Summarizable>::summary(&tweet));
 }
 
 
@@ -204,7 +204,7 @@ impl Tweet {
 
 // Traits can provide default implementations for some functions which make use of trait methods
 // w/o default implementation.
-pub trait Summarizable {
+pub trait SummarizableDefault {
     fn author_summary(&self) -> String;
 
     fn summary(&self) -> String {

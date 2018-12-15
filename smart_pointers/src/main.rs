@@ -10,11 +10,9 @@ use smart_pointers::*;
 
 fn main() {
     let mut x = 5;
-    {
-        // y is a simple mutable reference to x.
-        let y = &mut x;
-        *y += 1
-    }
+    // y is a simple mutable reference to x.
+    let y = &mut x;
+    *y += 1;
     assert_eq!(6, x);
     println!("Hello, world!");
 

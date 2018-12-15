@@ -1,20 +1,21 @@
-#[cfg(test)]
-
 enum TrafficLight {
     Red,
     Yellow,
-    Green,
+    _Green,
 }
 
 use TrafficLight::{Red, Yellow};
-
-fn main() {
-    let red = Red;
-    let yellow = Yellow;
-    let green = TrafficLight::Green; // because we didn’t `use` TrafficLight::Green
+pub fn f() {
+    let _red = Red;
+    let _yellow = Yellow;
+    // let _green = TrafficLight::Green; // because we didn’t `use` TrafficLight::Green
 }
 
+#[cfg(test)]
 mod tests {
+    use f;
     #[test]
-    fn it_works() {}
+    fn it_works() {
+        f();
+    }
 }
