@@ -69,7 +69,6 @@ fn main() {
     println!("{}", <Tweet as Summarizable>::summary(&tweet));
 }
 
-
 // Structs can be generic over types.
 // Point has 2 fields `x` and `y`, both of the same type.
 struct Point<T> {
@@ -111,9 +110,6 @@ impl<T, U> DoublePoint<T, U> {
     }
 }
 
-
-
-
 // Largest takes a slice over a list of objects of type T and returns the largest.
 fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
     let mut largest = list[0];
@@ -125,7 +121,6 @@ fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
     }
     largest // T has to implement the copy trait because we want to return a value instead of a reference.
 }
-
 
 // Custom traits:
 pub trait Summarizable {
@@ -184,7 +179,6 @@ impl MultiFunctionalTrait for FooBar {
 //}
 //}
 
-
 // Traits can have default implementatins.
 pub trait DefaultSummarizable {
     fn summary(&self) -> String {
@@ -217,3 +211,36 @@ pub trait SummarizableDefault {
 pub fn notify<T: Summarizable>(item: T) {
     println!("Breaking news! {}", item.summary());
 }
+
+pub fn notify_2018(item: impl Summarizable) {
+    println!("Breaking news! {}", item.summary());
+}
+
+trait Trait {}
+
+struct Foo {}
+struct Bar {}
+
+impl Trait for Foo {}
+impl Trait for Bar {}
+
+fn ret_trait(x: bool) -> Box<dyn Trait> {
+    if x {
+        Box::new(Foo {})
+    } else {
+        Box::new(Bar {})
+    }
+}
+
+/*
+ * Following would not be allowed, because `impl` requires its type to be concrete, not dynamic
+ *
+ fn ret_trait(x: bool) -> impl Trait {
+     if x {
+        Foo{}
+     } else {
+        Bar{}
+     }
+ }
+ *
+ * */
